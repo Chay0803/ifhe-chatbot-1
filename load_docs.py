@@ -18,11 +18,10 @@ def get_vectorstore(data_path="data"):
     splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
     chunks = splitter.split_documents(documents)
 
-    # ✅ Load sentence transformer model manually on CPU
-    model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
-    model.to("cpu")  # 🔥 manually force CPU usage
+    # ✅ Load model with CPU-only config to avoid .to() crash
+    model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2", device="cpu")
 
-    # ✅ Use the model in LangChain embedding wrapper
+    # ✅ Use LangChain wrapper
     embeddings = HuggingFaceEmbeddings(
         model_name="sentence-transformers/all-MiniLM-L6-v2",
         model=model
