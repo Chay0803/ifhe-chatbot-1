@@ -16,7 +16,7 @@ def get_vectorstore(data_path="data"):
     chunks = splitter.split_documents(documents)
 
     embeddings = HuggingFaceInstructEmbeddings(
-        model_name="hkunlp/instructor-xl"
+        model_name="hkunlp/instructor-base"  # ✅ Stable model for Streamlit Cloud
     )
 
     vectorstore = FAISS.from_documents(chunks, embeddings)
