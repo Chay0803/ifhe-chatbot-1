@@ -8,4 +8,4 @@ sentence-transformers==2.6.1
 faiss-cpu==1.7.4
 pypdf==3.17.4
 torch==2.0.1
-transformers==4.35.0
+transformers>=4.39.0
