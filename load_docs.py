@@ -7,6 +7,7 @@ from langchain_community.embeddings import HuggingFaceEmbeddings
 def get_vectorstore(data_path="data"):
     documents = []
 
+    # ✅ Load all PDFs from the data directory
     for filename in os.listdir(data_path):
         if filename.endswith(".pdf"):
             try:
@@ -20,12 +21,15 @@ def get_vectorstore(data_path="data"):
     if not documents:
         raise ValueError("❌ No documents loaded from PDF files!")
 
+    # ✅ Split documents into smaller chunks
     splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
     chunks = splitter.split_documents(documents)
 
+    # ✅ Use small, fast, streamlit-safe embedding model
     embeddings = HuggingFaceEmbeddings(
-        model_name="BAAI/bge-small-en-v1.5"
+        model_name="sentence-transformers/all-MiniLM-L6-v2"
     )
 
+    # ✅ Build FAISS vectorstore and return retriever
     vectorstore = FAISS.from_documents(chunks, embeddings)
     return vectorstore.as_retriever(search_kwargs={"k": 5})
