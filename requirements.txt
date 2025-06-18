@@ -7,3 +7,4 @@ transformers==4.35.0
 torch==2.0.1
 pypdf==3.17.4
 streamlit
+pydantic==1.10.13
