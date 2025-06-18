@@ -2,25 +2,25 @@ import requests
 import os
 
 def ask_llama(prompt):
-    api_key = os.getenv("TOGETHER_API_KEY")
-    url = "https://api.together.xyz/v1/completions"
-
+    url = "https://api.together.xyz/v1/chat/completions"
     headers = {
-        "Authorization": f"Bearer {api_key}",
+        "Authorization": f"Bearer {TOGETHER_API_KEY}",
         "Content-Type": "application/json"
     }
 
     payload = {
-        "model": "meta-llama/Llama-3.1-8B-Instruct",
-        "prompt": prompt,
-        "max_tokens": 512,
+        "model": "meta-llama/Meta-Llama-3-8B-Instruct",
+        "messages": [
+            {"role": "user", "content": prompt}
+        ],
         "temperature": 0.7,
-        "stop": ["\n\n"]
+        "top_p": 0.9,
+        "max_tokens": 512
     }
 
-    try:
-        response = requests.post(url, headers=headers, json=payload)
-        response.raise_for_status()
-        return response.json()["choices"][0]["text"].strip()
-    except Exception as e:
-        return f"❌ Error: {e}"
+    response = requests.post(url, headers=headers, json=payload)
+
+    if response.status_code == 200:
+        return response.json()['choices'][0]['message']['content']
+    else:
+        return f"❌ Error {response.status_code}: {response.text}"
