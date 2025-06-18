@@ -4,7 +4,7 @@ import os
 def ask_llama(prompt):
     url = "https://api.together.xyz/v1/chat/completions"
     headers = {
-        "Authorization": f"Bearer {TOGETHER_API_KEY}",
+        "Authorization": f"Bearer {TOGETHER_API_KEY = "2da7a11f4b32a4e6fbb54ac8c1f07c81ccc588792a3fbb0e166b9dbb54e2178f"}",
         "Content-Type": "application/json"
     }
 
