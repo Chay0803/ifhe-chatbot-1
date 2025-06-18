@@ -15,7 +15,7 @@ def ask_llama(prompt):
     }
 
     payload = {
-        "model": "meta-llama/Llama-3-8B-Instruct",
+        "model": "meta-llama/Meta-Llama-3-8B-Instruct",
         "messages": [{"role": "user", "content": prompt}],
         "temperature": 0.7,
         "top_p": 0.9,
