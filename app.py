@@ -5,7 +5,7 @@ from course_matcher import match_courses
 from load_docs import get_vectorstore
 
 st.set_page_config(page_title="IFHE Chatbot", layout="wide")
-st.title("🎓 IFHE College Chatbot (Mistral + PDFs)")
+st.title(" IFHE College Chatbot ")
 st.markdown("Ask anything about admission, eligibility, scholarships, hostel, or course suggestions.")
 
 retriever = get_vectorstore()
@@ -24,7 +24,7 @@ def normalize_query(q):
         return "Who is the founder of IFHE?"
     return q
 
-tab1, tab2, tab3 = st.tabs(["🤖 Ask the Chatbot", "🎓 Course Recommender", "💼 Employee Salary Lookup"])
+tab1, tab2, tab3 = st.tabs(["Ask the Chatbot", "Course Recommender", "Employee Details"])
 
 # ────────────────────────────────
 # Tab 1: Chatbot
@@ -46,7 +46,7 @@ Question: {question}
 
 Answer:"""
                 answer = ask_llama(prompt)
-                st.markdown("### 📌 Answer:")
+                st.markdown("###  Answer:")
                 st.success(answer)
         else:
             st.warning("Please enter a question.")
@@ -55,7 +55,7 @@ Answer:"""
 # Tab 2: Course Recommender
 # ────────────────────────────────
 with tab2:
-    st.subheader("🎯 Get Course Recommendations")
+    st.subheader("Get Course Recommendations")
     stream = st.selectbox("Select Your Stream", ["", "Science", "Commerce", "Arts"])
     interest = st.text_input("What is your area of interest? (e.g. AI, Law, Management)")
     english = st.selectbox("Are you comfortable in English?", ["", "Yes", "No"])
@@ -77,7 +77,7 @@ with tab2:
 # Tab 3: Employee Lookup
 # ────────────────────────────────
 with tab3:
-    st.subheader("🔍 Employee Salary Lookup")
+    st.subheader(" Employee Details Lookup")
     empid_input = st.text_input("Enter Employee ID")
 
     try:
@@ -88,10 +88,10 @@ with tab3:
                 match = df[df["empid"].astype(str) == empid_input]
                 if not match.empty:
                     row = match.iloc[0]
-                    st.success(f"👤 Name: {row['name']}\n💰 Salary: ₹{row['salary']}")
+                    st.success(f" Name: {row['name']}\n Salary: ₹{row['salary']}")
                 else:
-                    st.error("❌ Employee not found.")
+                    st.error(" Employee not found.")
             else:
                 st.warning("Please enter a valid Employee ID.")
     except FileNotFoundError:
-        st.error("❌ employees.csv not found. Please upload it to use this feature.")
+        st.error(" employees.csv not found. Please upload it to use this feature.")
