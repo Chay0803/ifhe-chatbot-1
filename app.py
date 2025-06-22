@@ -94,7 +94,7 @@ with tab3:
     st.subheader("Employee Details Lookup")
 
     try:
-        df = pd.read_csv("data/employees.csv")  # Must contain: empid, name, salary, experience, date_of_joining
+        df = pd.read_csv("employees1.csv")  # Must contain: empid, name, salary, experience, date_of_joining
         search_type = st.radio("Search by:", ["Employee ID", "Salary ≥", "Experience ≥"])
 
         if search_type == "Employee ID":
