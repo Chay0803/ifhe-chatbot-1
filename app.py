@@ -1,10 +1,11 @@
 import streamlit as st
+import pandas as pd
 from llama_api import ask_llama
 from course_matcher import match_courses
 from load_docs import get_vectorstore
 
 st.set_page_config(page_title="IFHE Chatbot", layout="wide")
-st.title("🎓 IFHE College Chatbot (LLaMA 3.1 + PDFs)")
+st.title("🎓 IFHE College Chatbot (Mistral + PDFs)")
 st.markdown("Ask anything about admission, eligibility, scholarships, hostel, or course suggestions.")
 
 retriever = get_vectorstore()
@@ -23,8 +24,11 @@ def normalize_query(q):
         return "Who is the founder of IFHE?"
     return q
 
-tab1, tab2 = st.tabs(["🤖 Ask the Chatbot", "🎓 Course Recommender"])
+tab1, tab2, tab3 = st.tabs(["🤖 Ask the Chatbot", "🎓 Course Recommender", "💼 Employee Salary Lookup"])
 
+# ────────────────────────────────
+# Tab 1: Chatbot
+# ────────────────────────────────
 with tab1:
     question = st.text_input("Enter your question:")
     if st.button("Ask"):
@@ -32,7 +36,7 @@ with tab1:
             with st.spinner("Reading documents and generating response..."):
                 query = normalize_query(question)
                 docs = retriever.invoke(query)
-                context = "\n\n".join([d.page_content for d in docs])
+                context = "\n\n".join([d.page_content for d in docs[:10]])  # Increased to 10 docs
                 prompt = f"""You are an academic assistant for IFHE University. Use the context below to answer the question clearly and helpfully.
 
 Context:
@@ -47,6 +51,9 @@ Answer:"""
         else:
             st.warning("Please enter a question.")
 
+# ────────────────────────────────
+# Tab 2: Course Recommender
+# ────────────────────────────────
 with tab2:
     st.subheader("🎯 Get Course Recommendations")
     stream = st.selectbox("Select Your Stream", ["", "Science", "Commerce", "Arts"])
@@ -61,3 +68,30 @@ with tab2:
                 st.success(f"✅ {course}")
         else:
             st.warning("Please fill all fields to get recommendations.")
+
+    # Apply Now button
+    if st.button("Apply Now"):
+        st.markdown("[Click here to apply](https://ifheapplicationpage.example.com)", unsafe_allow_html=True)
+
+# ────────────────────────────────
+# Tab 3: Employee Lookup
+# ────────────────────────────────
+with tab3:
+    st.subheader("🔍 Employee Salary Lookup")
+    empid_input = st.text_input("Enter Employee ID")
+
+    try:
+        df = pd.read_csv("employees.csv")  # Ensure this CSV exists in the app directory
+        if st.button("Get Salary"):
+            if empid_input.strip():
+                empid_input = empid_input.strip()
+                match = df[df["empid"].astype(str) == empid_input]
+                if not match.empty:
+                    row = match.iloc[0]
+                    st.success(f"👤 Name: {row['name']}\n💰 Salary: ₹{row['salary']}")
+                else:
+                    st.error("❌ Employee not found.")
+            else:
+                st.warning("Please enter a valid Employee ID.")
+    except FileNotFoundError:
+        st.error("❌ employees.csv not found. Please upload it to use this feature.")
