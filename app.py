@@ -21,14 +21,7 @@ st.markdown("""
     body {
         background-color: #f4f8fb;
     }
-    .main {
-        background-color: #ffffff;
-        border-radius: 12px;
-        border: 2px solid #003366;
-        padding: 32px 24px 24px 24px;
-        margin-top: 24px;
-        box-shadow: 0 4px 24px rgba(0,0,0,0.07);
-    }
+    
     .stTabs [data-baseweb="tab-list"] {
         background: #e6eef7;
         border-radius: 8px;
@@ -199,4 +192,5 @@ with tab3:
         st.error(f"Error reading employee data: {e}")
 # --- Close bordered div ---
 st.markdown('</div>', unsafe_allow_html=True)
+
 
