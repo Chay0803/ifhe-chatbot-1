@@ -131,7 +131,6 @@ with tab2:
                 if recs:
                     for course in recs:
                         st.success(f"{course}")
-                    if 
                     st.markdown(
                         """
                         <a href="https://ifheindia.org/online-registration" target="_blank">
@@ -190,3 +189,4 @@ with tab3:
         st.error(f"Error reading employee data: {e}")
 # --- Close bordered div ---
 st.markdown('</div>', unsafe_allow_html=True)
+
