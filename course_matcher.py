@@ -12,7 +12,21 @@ def match_courses(candidate):
 
     if "science" in stream:
         if "tech" in interest or "computer" in interest:
-            courses += ["B.Tech (AI, CSE, ECE)", "B.Sc (Computer Science)", "B.Sc (Data Analytics)", "BCA"]
+            courses += [
+            "B.Tech CSE Artificial Intelligence",
+            "B.Tech CSE Artificial Intelligence & Data Science",
+            "B.Tech CSE Artificial Intelligence & Machine Learning",
+            "B.Tech Computer Science Engineering",
+            "B.Tech Electronics & Communication Engineering",
+            "B.Tech Mechanical Engineering",
+            "B.Sc. Data Analytics (Hons. or Hons With Research)",
+            "B.Sc. Computer Science (Hons. or Hons With Research)",
+            "B.Sc. Physics (Hons. or Hons With Research)",
+            "B.Sc. Mathematics (Hons. or Hons With Research)",
+            "B.Sc. Robotics with AI (Honors or Honors with Research)",
+            "BCA AI & ML (Honors or with Honors Research)",
+            "BCA - AI & DS (Honors or with Honors Research)"
+            ]
         if "management" in interest:
             courses += ["BBA", "BBA (AI & Data Science)", "BBA (Cloud & Cyber Security)"]
 
@@ -32,3 +46,4 @@ def match_courses(candidate):
         courses.append("No direct matches found. Consider general programs like BBA or BCA.")
 
     return courses
+
