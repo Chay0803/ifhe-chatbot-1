@@ -38,7 +38,7 @@ def match_courses(candidate):
 
     elif "arts" in stream:
         if "law" in interest:
-            courses += ["BA-LLB (Hons.)"]
+            courses += ["BA-LLB (Hons.)", "BAJ-LLB (Hons.)"]
         if "economics" in interest:
             courses += ["BA (Economics)"]
 
@@ -46,4 +46,5 @@ def match_courses(candidate):
         courses.append("No direct matches found. Consider general programs like BBA or BCA.")
 
     return courses
+
 
