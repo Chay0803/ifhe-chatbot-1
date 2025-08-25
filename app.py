@@ -131,12 +131,19 @@ with tab2:
                 if recs:
                     for course in recs:
                         st.success(f"{course}")
-                    if st.button("Apply Now"):
-                        st.markdown("[Click here to apply](https://ifheindia.org/online-registration)", unsafe_allow_html=True)
+                    if 
+                    st.markdown(
+                        """
+                        <a href="https://ifheindia.org/online-registration" target="_blank">
+                            <button style="background-color:#003366;color:white;padding:10px 24px;border:none;border-radius:6px;font-size:16px;">
+                                Apply Now
+                            </button>
+                        </a>
+                        """,
+                        unsafe_allow_html=True
+                    )
                 else:
                     st.info("No matching courses found.")
-        else:
-            st.warning("Please fill all fields to get recommendations.")
 
 
 # Tab 3: Employee Lookup
