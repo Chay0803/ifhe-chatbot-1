@@ -6,7 +6,61 @@ from load_docs import get_vectorstore
 
 st.set_page_config(page_title="IFHE Chatbot", layout="wide")
 st.title("IFHE College Chatbot")
-st.markdown("Ask anything about admission, eligibility, scholarships, hostel, or course suggestions.")
+st.markdown("""
+    <style>
+    body {
+        background-color: #f4f8fb;
+    }
+    .main {
+        background-color: #ffffff;
+        border-radius: 12px;
+        border: 2px solid #003366;
+        padding: 32px 24px 24px 24px;
+        margin-top: 24px;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+    }
+    .stTabs [data-baseweb="tab-list"] {
+        background: #e6eef7;
+        border-radius: 8px;
+        border: 1px solid #003366;
+        padding: 4px;
+    }
+    .stTabs [data-baseweb="tab"] {
+        color: #003366;
+        font-weight: 600;
+    }
+    .stTabs [aria-selected="true"] {
+        background: #003366 !important;
+        color: #fff !important;
+        border-radius: 6px 6px 0 0;
+    }
+    h1, .stMarkdown h1 {
+        color: #003366;
+    }
+    .stButton>button {
+        background-color: #003366;
+        color: #fff;
+        border-radius: 6px;
+        border: none;
+        font-weight: 600;
+    }
+    .stButton>button:hover {
+        background-color: #00509e;
+        color: #fff;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
+st.set_page_config(
+    page_title="IFHE Professional Chatbot",
+    page_icon="🎓",
+    layout="wide"
+)
+
+# --- Wrap main content in a bordered div ---
+st.markdown('<div class="main">', unsafe_allow_html=True)
+
+
 
 # Load FAISS retriever
 retriever = get_vectorstore()
@@ -27,9 +81,7 @@ def normalize_query(q):
 
 tab1, tab2, tab3 = st.tabs(["Ask the Chatbot", "Course Recommender", "Employee Details"])
 
-# ─────────────────────────
 # Tab 1: Chatbot
-# ─────────────────────────
 with tab1:
     question = st.text_input("Enter your question:")
     if st.button("Ask"):
@@ -37,7 +89,7 @@ with tab1:
             with st.spinner("Reading documents and generating response..."):
                 query = normalize_query(question)
                 docs = retriever.invoke(query)
-                context = "\n\n".join([d.page_content for d in docs[:10]])  # top 10 docs
+                context = "\n\n".join([d.page_content for d in docs[:10]])  
                 prompt = f"""You are an academic assistant for IFHE University. Use the context below to answer the question clearly and helpfully.
 
 Context:
@@ -52,9 +104,8 @@ Answer:"""
         else:
             st.warning("Please enter a question.")
 
-# ─────────────────────────
 # Tab 2: Course Recommender
-# ─────────────────────────
+
 with tab2:
     st.subheader("Course Recommendations")
 
@@ -81,20 +132,20 @@ with tab2:
                     for course in recs:
                         st.success(f"{course}")
                     if st.button("Apply Now"):
-                        st.markdown("[Click here to apply](https://ifheapplicationpage.example.com)", unsafe_allow_html=True)
+                        st.markdown("[Click here to apply](https://ifheindia.org/online-registration)", unsafe_allow_html=True)
                 else:
                     st.info("No matching courses found.")
         else:
             st.warning("Please fill all fields to get recommendations.")
 
-# ─────────────────────────
+
 # Tab 3: Employee Lookup
-# ─────────────────────────
+
 with tab3:
     st.subheader("Employee Details Lookup")
 
     try:
-        df = pd.read_csv("employees1.csv")  # Must contain: empid, name, salary, experience, date_of_joining
+        df = pd.read_csv("employees1.csv")  
         search_type = st.radio("Search by:", ["Employee ID", "Salary ≥", "Experience ≥"])
 
         if search_type == "Employee ID":
@@ -130,3 +181,5 @@ with tab3:
         st.error("employees.csv not found. Please upload it to use this feature.")
     except Exception as e:
         st.error(f"Error reading employee data: {e}")
+# --- Close bordered div ---
+st.markdown('</div>', unsafe_allow_html=True)
