@@ -169,7 +169,7 @@ with tab3:
         elif search_type == "Salary ≥":
             salary_input = st.number_input("Enter Minimum Salary", min_value=0)
             if st.button("Get Employees by Salary"):
-                filtered = df[df["salary"] >= salary_input]
+                filtered = df[df["Salary(Rs/-)"] >= salary_input]
                 if not filtered.empty:
                     st.dataframe(filtered)
                 else:
@@ -178,7 +178,7 @@ with tab3:
         elif search_type == "Experience ≥":
             exp_input = st.number_input("Enter Minimum Experience (in years)", min_value=0)
             if st.button("Get Employees by Experience"):
-                filtered = df[df["experience"] >= exp_input]
+                filtered = df[df["Experience(Yrs)"] >= exp_input]
                 if not filtered.empty:
                     st.dataframe(filtered)
                 else:
@@ -189,4 +189,5 @@ with tab3:
         st.error(f"Error reading employee data: {e}")
 # --- Close bordered div ---
 st.markdown('</div>', unsafe_allow_html=True)
+
 
