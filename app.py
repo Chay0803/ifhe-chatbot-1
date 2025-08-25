@@ -5,7 +5,17 @@ from course_matcher import match_courses
 from load_docs import get_vectorstore
 
 st.set_page_config(page_title="IFHE Chatbot", layout="wide")
-st.title("IFHE College Chatbot")
+st.markdown(
+    """
+    <div style="background-color:#003366; padding: 18px 0; border-radius: 10px; text-align: center; margin-bottom: 30px;">
+        <span style="color: white; font-size: 2.2rem; font-weight: bold; letter-spacing: 1px;">
+            IFHE College Chatbot
+        </span>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+#st.title("IFHE College Chatbot")
 st.markdown("""
     <style>
     body {
@@ -131,6 +141,7 @@ with tab2:
                 if recs:
                     for course in recs:
                         st.success(f"{course}")
+                    if 
                     st.markdown(
                         """
                         <a href="https://ifheindia.org/online-registration" target="_blank">
@@ -169,7 +180,7 @@ with tab3:
         elif search_type == "Salary ≥":
             salary_input = st.number_input("Enter Minimum Salary", min_value=0)
             if st.button("Get Employees by Salary"):
-                filtered = df[df["Salary(Rs/-)"] >= salary_input]
+                filtered = df[df["salary"] >= salary_input]
                 if not filtered.empty:
                     st.dataframe(filtered)
                 else:
@@ -178,7 +189,7 @@ with tab3:
         elif search_type == "Experience ≥":
             exp_input = st.number_input("Enter Minimum Experience (in years)", min_value=0)
             if st.button("Get Employees by Experience"):
-                filtered = df[df["Experience(Yrs)"] >= exp_input]
+                filtered = df[df["experience"] >= exp_input]
                 if not filtered.empty:
                     st.dataframe(filtered)
                 else:
@@ -189,5 +200,3 @@ with tab3:
         st.error(f"Error reading employee data: {e}")
 # --- Close bordered div ---
 st.markdown('</div>', unsafe_allow_html=True)
-
-
