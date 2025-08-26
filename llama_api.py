@@ -12,7 +12,7 @@ def ask_llama(prompt):
     }
 
     payload = {
-        "model": "mistralai/Mistral-7B-Instruct-v0.1",  # ✅ works on Together API
+        "model": "mistralai/Mistral-7B-Instruct-v0.1",  
         "messages": [
             {"role": "system", "content": "You are a helpful assistant for answering college admission queries."},
             {"role": "user", "content": prompt}
@@ -26,3 +26,4 @@ def ask_llama(prompt):
     response.raise_for_status()
 
     return response.json()["choices"][0]["message"]["content"]
+
